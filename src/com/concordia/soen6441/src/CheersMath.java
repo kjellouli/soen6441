@@ -11,7 +11,7 @@ public class CheersMath {
 		this.pi = pi();
 	}
 	
-	// Computing square root using Bablonian 
+	// Computing square root using Babylonian 
 	protected double sqrt(double number) {
 	    double x = number;
 	    double y = 1;
