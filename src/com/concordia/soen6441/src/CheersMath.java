@@ -4,6 +4,7 @@ public class CheersMath {
 	
 	private int precision;
 	private double pi;
+	private double alpha = 2.304129659127962;
 	
 	public CheersMath(int precision){
 		this.precision = precision; // TODO: cast precision to long only, no double, string or float allowed
@@ -14,7 +15,7 @@ public class CheersMath {
 	protected double sqrt(double number) {
 	    double x = number;
 	    double y = 1;
-	    double e = 0.000000000001; /* for accuracy level*/
+	    double e = 0.000000000001; // for accuracy level
 	    while (x - y > e) {
 	        x = (x + y) / 2;
 	        y = number / x;
@@ -35,6 +36,8 @@ public class CheersMath {
 	
 	protected double round(double nb){
 		double prec = 10^this.precision;
+//		if(precision != null)
+//			prec = 2;
 		nb *= prec;
 		nb = (int) nb;
 		nb /= prec;
@@ -47,11 +50,8 @@ public class CheersMath {
 	    double cosValue = 1.0, power = 1.0;
 	    int n = 2, factorial = 1;
 	    while (n <= this.precision) {
-//	    while (power/factorial != 0) {
 	        power = power * x * x * -1;
-//	        factorial = factorial(n);
 	        factorial = factorial * n * (n-1);
-//	        System.out.println(power/factorial);
 	        cosValue = cosValue + (power / factorial);
 	        n = n + 2;
 	    }
@@ -72,20 +72,15 @@ public class CheersMath {
 	    return 4 * piValue;
 	}
 	
+	// http://mathcentral.uregina.ca/QQ/database/QQ.09.00/roble1.html
+	// using Newton's method, we can solve f(x) = sin(alpha) - alpha + pi/2 when f(x) = 0
+	// Wolfram alpha gives 2.3098814600100572609 https://www.wolframalpha.com/input/?i=alpha+-+sin+alpha+%3D+pi+%2F2
 	protected double alpha(){
-//		for(double alpha = 0; alpha < 10000; alpha+=1){
-		double alpha = 0.0;
-		double piOverTwo = pi/2.0;
-		double prec = 0.00001;
-//		double rad = degToRad(alpha);
-		while(alpha - sin(alpha) - piOverTwo != prec){
-			System.out.println(alpha+" - sin("+alpha+")="+ (alpha - sin(alpha)) +", pi/2="+piOverTwo);
-			if(alpha!= 0.0 && alpha - sin(alpha) - piOverTwo != prec){
-				return alpha;
-			}
-			alpha += prec;
+		double alpha = 1.0;
+		for(int i=0; i<100; i++){ // after 78th iteration, it converges to 2.304129659127962
+			alpha = alpha - ((pi/2 - alpha + sin(alpha))/(-1 + cos(alpha)));
 		}
-		return 0;
+		return alpha; // 2.304129659127962
 	}
 	
 	// Computing sin(x) using Taylor Series
@@ -102,10 +97,10 @@ public class CheersMath {
         return round(sum);
 	}
 	
+	//	L = 2R(1 – cos(α/2))
+	//	α – sin(α) = π/2.
 	public double length(double radius){
-//		L = 2R(1 – cos(α/2))
-//		α – sin(α) = π/2.
-		
-		return 1; 
+		this.precision = 2;
+		return round(2 * radius * (1 - cos(alpha/2))); 
 	}
 }

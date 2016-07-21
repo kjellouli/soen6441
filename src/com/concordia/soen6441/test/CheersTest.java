@@ -7,11 +7,11 @@ import com.concordia.soen6441.src.*;
 public class CheersTest extends CheersMath{
 
 	private static final int PRECISION = 20;
-	private static final boolean TESTCOS = false;
-	private static final boolean TESTSIN = false;
-	private static final boolean TESTSQRT = false;
-	private static final boolean TESTPI = false;
-	private static final boolean TESTALPHA = true;
+	private static final boolean TEST_COS = false;
+	private static final boolean TEST_SIN = false;
+	private static final boolean TEST_SQRT = false;
+	private static final boolean TEST_PI = false;
+	private static final boolean TEST_ALPHA = true;
 	static CheersTest test = new CheersTest(PRECISION);
 	
 	public CheersTest(int precision) {
@@ -63,21 +63,21 @@ public class CheersTest extends CheersMath{
 	public static void main(String args[]) throws CheersException {
 
 		try {
-			if(TESTCOS)
+			if(TEST_COS)
 				for(int angle=0; angle<=90; angle+=30){
 					compareCos(angle);
 				}
-			if(TESTSIN)
+			if(TEST_SIN)
 				for(int angle=0; angle<=90; angle+=30){
 					compareSin(angle);
 				}
-			if(TESTSQRT)
+			if(TEST_SQRT)
 				compareSqrt(16);
 			
-			if(TESTPI)
+			if(TEST_PI)
 				comparePi();
 			
-			if(TESTALPHA)
+			if(TEST_ALPHA)
 				showAlpha();
 		}
 		catch (Exception e) {

@@ -15,13 +15,15 @@ public class CheersUi {
 			while (true) {
 				InputStreamReader is = new InputStreamReader(System. in );
 				BufferedReader br = new BufferedReader(is);
-				System.out.println("Enter the Radius and Precision:");
+				System.out.println("Please enter the Radius:");
 				try{
-					radius = Float.parseFloat(br.readLine()); // TODO: make parseFloat native
-//					precision = Integer.parseInt(br.readLine());
-					precision = 100;
+					 // TODO: make parseFloat native and control radius not to be too much small or big 
+					// check from internet what is the smallest-biggest size to add as fact
+					radius = Float.parseFloat(br.readLine());
+					System.out.println("Please enter the Precision:");
+					precision = Integer.parseInt(br.readLine());
 					CheersMath cheersMath = new CheersMath(precision); 
-					System.out.println("length = " + cheersMath.length(radius));
+					System.out.println("The two coasters need to be moved " + cheersMath.length(radius) + " inch far from each other");
 				}
 				catch(NumberFormatException e){
 					System.out.println("Wrong Number Format");
