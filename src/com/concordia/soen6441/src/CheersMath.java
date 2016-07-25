@@ -3,20 +3,39 @@ package com.concordia.soen6441.src;
 public class CheersMath {
 
 	private int precision;
+	private double radius;
 	private double pi;
-	private double alpha = 2.304129659127962;
+	
+	private final static double alpha = 2.304129659127962;
+	private final static int RADIUS_MIN = 2;
+	private final static int RADIUS_MAX = 5;
+	private final static double STRAIGHT_ANGLE_SIZE = 180.0;
+	
+	private final static double SQRT_PRECISION = 0.000000000001;
+	private final static int PI_PRECISION = 1000000000;
+	
+	private final static int COS_ITERATIONS = 25;
+	private final static int ALPHA_ITERATIONS = 100;
 
-	public CheersMath(int precision) {
-		this.precision = precision; // TODO: cast precision to long only, no
-									// double, string or float allowed
-		this.pi = pi();
+	public CheersMath(double radius, int precision) throws CheersException {
+		if(precision < 0)
+			throw new CheersException("The Precision value cannot be negative.");
+		if(radius < RADIUS_MIN || radius > RADIUS_MAX)
+			throw new CheersException("The Radius must be between 2 and 5.");
+		try{
+			this.precision = precision; // TODO: cast precision to long only, no double, string or float allowed
+			this.radius = radius;
+			this.pi = pi();
+		} catch (NumberFormatException e) {
+			System.out.println("The Radius or Precision have the wrong number format.");
+		}
 	}
 
-	// Computing square root using Babylonian
+	// Computing square root using the Babylonian method
 	protected double sqrt(double number) {
 		double x = number;
 		double y = 1;
-		double e = 0.000000000001; // for accuracy level
+		double e = SQRT_PRECISION; // for accuracy level
 		while (x - y > e) {
 			x = (x + y) / 2;
 			y = number / x;
@@ -31,14 +50,20 @@ public class CheersMath {
 			return n * factorial(n - 1);
 	}
 
-	protected double degToRad(double deg) {
-		return deg / 180.0 * pi;
+	protected double convertDegreeToRadian(double deg) {
+		return deg / STRAIGHT_ANGLE_SIZE * pi;
 	}
 
 	protected double round(double nb) {
 		double prec = 10 ^ this.precision;
-		// if(precision != null)
-		// prec = 2;
+		nb *= prec;
+		nb = (int) nb;
+		nb /= prec;
+		return nb;
+	}
+	
+	protected double roundToTwo(double nb){
+		int prec = 2;
 		nb *= prec;
 		nb = (int) nb;
 		nb /= prec;
@@ -54,14 +79,14 @@ public class CheersMath {
 			term = (term * (x / i));
 			if (i % 2 == 0) {
 				if (i % 4 == 0) {
-					sum = sum + term;
+					sum += term;
 
 				} else {
-					sum = sum - term;
+					sum -= term;
 				}
 			}
 			i++;
-		} while (i <= 25);
+		} while (i <= COS_ITERATIONS);
 		return sum;
 	}
 
@@ -69,7 +94,7 @@ public class CheersMath {
 	// Gregory–Leibniz
 	// http://functions.wolfram.com/Constants/Pi/02/
 	protected double pi() {
-		double piValue = 0, flip = -1, prec = 1000000000;
+		double piValue = 0, flip = -1, prec = PI_PRECISION;
 		int n = 1;
 		while (n <= prec) {
 			flip = -1 * flip;
@@ -82,13 +107,11 @@ public class CheersMath {
 	// http://mathcentral.uregina.ca/QQ/database/QQ.09.00/roble1.html
 	// using Newton's method, we can solve f(x) = sin(alpha) - alpha + pi/2 when
 	// f(x) = 0
-	// Wolfram alpha gives 2.3098814600100572609
-	// https://www.wolframalpha.com/input/?i=alpha+-+sin+alpha+%3D+pi+%2F2
 	protected double alpha() {
 		double alpha = 1.0;
-		for (int i = 0; i < 100; i++) { // after 78th iteration, it converges to
+		for (int i = 0; i < ALPHA_ITERATIONS; i++) { // after 78th iteration, it converges to
 										// 2.304129659127962
-			alpha = alpha - ((pi / 2 - alpha + sin(alpha)) / (-1 + cos(alpha)));
+			alpha = alpha - ((pi / 2 - alpha + sin(alpha)) / (-1 + cos(alpha))); // next x = current x - fx/fx'
 		}
 		return alpha; // 2.304129659127962
 	}
@@ -113,9 +136,9 @@ public class CheersMath {
 
 	// L = 2R(1 – cos(α/2))
 	// α – sin(α) = π/2.
-	public double length(double radius) {
+	public double getLength() throws CheersException{
 		this.precision = 2;
 		double cosValue = cos(alpha / 2);
-		return round(2 * radius * (1 - cosValue));
+		return roundToTwo(2 * radius * (1 - cosValue));
 	}
 }

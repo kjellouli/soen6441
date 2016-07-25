@@ -6,22 +6,23 @@ import com.concordia.soen6441.src.*;
 
 public class CheersTest extends CheersMath{
 
+	private static final double RADIUS = 5.0;
 	private static final int PRECISION = 20;
 	private static final boolean TEST_COS = false;
 	private static final boolean TEST_SIN = false;
 	private static final boolean TEST_SQRT = false;
 	private static final boolean TEST_PI = false;
 	private static final boolean TEST_ALPHA = true;
-	static CheersTest test = new CheersTest(PRECISION);
+	static CheersTest test;
 	
-	public CheersTest(int precision) {
-		super(precision);
+	public CheersTest(double radius, int precision) throws CheersException {
+		super(radius, precision);
 	}
 	
 	private static void compareCos(double angdeg) {
 	
 		System.out.println("Test - Comparing Cos("+angdeg+") in Cheers and Native\n");
-		double rad = test.degToRad(angdeg);
+		double rad = test.convertDegreeToRadian(angdeg);
 		System.out.println("rad       = " + rad);
 		System.out.println("deg       = " + angdeg);
 		System.out.println("javaCos   = " + Math.cos(rad));
@@ -32,7 +33,7 @@ public class CheersTest extends CheersMath{
 	private static void compareSin(double angdeg) {
 	
 		System.out.println("Test - Comparing Sin("+angdeg+") in Cheers and Native\n");
-		double rad = test.degToRad(angdeg);
+		double rad = test.convertDegreeToRadian(angdeg);
 		System.out.println("rad       = " + rad);
 		System.out.println("deg       = " + angdeg);
 		System.out.println("javaSin   = " + Math.sin(rad));
@@ -62,6 +63,7 @@ public class CheersTest extends CheersMath{
 
 	public static void main(String args[]) throws CheersException {
 
+		test = new CheersTest(RADIUS, PRECISION);
 		try {
 			if(TEST_COS)
 				for(int angle=0; angle<=90; angle+=30){

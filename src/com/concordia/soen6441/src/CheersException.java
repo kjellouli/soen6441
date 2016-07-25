@@ -2,6 +2,7 @@ package com.concordia.soen6441.src;
 
 public class CheersException extends Exception
 {
+	private static final long serialVersionUID = -3594829237542405847L;
 
 	public CheersException()
     {
