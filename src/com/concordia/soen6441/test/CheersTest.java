@@ -8,6 +8,7 @@ public class CheersTest extends CheersMath{
 
 	private static final double RADIUS = 5.0;
 	private static final int PRECISION = 20;
+	private static final int PRECISIONOUTPUT = 2;
 	private static final boolean TEST_COS = false;
 	private static final boolean TEST_SIN = false;
 	private static final boolean TEST_SQRT = false;
@@ -15,8 +16,8 @@ public class CheersTest extends CheersMath{
 	private static final boolean TEST_ALPHA = true;
 	static CheersTest test;
 	
-	public CheersTest(double radius, int precision) throws CheersException {
-		super(radius, precision);
+	public CheersTest(double radius, int precision,int precisionOutput) throws CheersException {
+		super(radius, precision,precisionOutput);
 	}
 	
 	private static void compareCos(double angdeg) {
@@ -47,13 +48,6 @@ public class CheersTest extends CheersMath{
 		System.out.println("cheersPi = " + test.pi());
 		System.out.println("=======================================\n");
 	}
-
-	private static void compareSqrt(double nb) {
-		System.out.println("Test - Comparing Sqrt in Cheers and Native\n");
-		System.out.println("javaPi   = " + Math.sqrt(nb));
-		System.out.println("cheersPi = " + test.sqrt(nb));
-		System.out.println("=======================================\n");
-	}
 	
 	private static void showAlpha() {
 		System.out.println("Test - Compute alpha value in Cheers\n");
@@ -63,7 +57,7 @@ public class CheersTest extends CheersMath{
 
 	public static void main(String args[]) throws CheersException {
 
-		test = new CheersTest(RADIUS, PRECISION);
+		test = new CheersTest(RADIUS, PRECISION,PRECISIONOUTPUT);
 		try {
 			if(TEST_COS)
 				for(int angle=0; angle<=90; angle+=30){
@@ -73,9 +67,6 @@ public class CheersTest extends CheersMath{
 				for(int angle=0; angle<=90; angle+=30){
 					compareSin(angle);
 				}
-			if(TEST_SQRT)
-				compareSqrt(16);
-			
 			if(TEST_PI)
 				comparePi();
 			

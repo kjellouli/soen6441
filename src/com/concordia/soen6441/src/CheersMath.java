@@ -1,27 +1,20 @@
 package com.concordia.soen6441.src;
+import com.concordia.soen6441.src.CheersConfig;
 
 public class CheersMath {
 
 	private int precision;
+	private int precisionOutput;
 	private double radius;
 	private double pi;
-	
-	private final static double alpha = 2.304129659127962;
-	private final static int RADIUS_MIN = 2;
-	private final static int RADIUS_MAX = 5;
-	private final static double STRAIGHT_ANGLE_SIZE = 180.0;
-	
-	private final static double SQRT_PRECISION = 0.000000000001;
-	private final static int PI_PRECISION = 1000000000;
-	
-	private final static int COS_ITERATIONS = 25;
-	private final static int ALPHA_ITERATIONS = 100;
 
-	public CheersMath(double radius, int precision) throws CheersException {
+	public CheersMath(double radius, int precision, int precisionOutput) throws CheersException {
+		if(radius < CheersConfig.RADIUS_MIN || radius > CheersConfig.RADIUS_MAX)
+			throw new CheersException("The Radius must be between 2 and 5.");
 		if(precision < 0)
 			throw new CheersException("The Precision value cannot be negative.");
-		if(radius < RADIUS_MIN || radius > RADIUS_MAX)
-			throw new CheersException("The Radius must be between 2 and 5.");
+		if(precisionOutput < CheersConfig.PRECISION_OUTPUT_MIN || precisionOutput > CheersConfig.PRECISION_OUTPUT_MAX)
+			throw new CheersException("The Precision value must be between "+CheersConfig.PRECISION_OUTPUT_MIN+" and "+CheersConfig.PRECISION_OUTPUT_MAX+".");
 		try{
 			this.precision = precision; // TODO: cast precision to long only, no double, string or float allowed
 			this.radius = radius;
@@ -31,27 +24,8 @@ public class CheersMath {
 		}
 	}
 
-	// Computing square root using the Babylonian method
-	protected double sqrt(double number) {
-		double x = number;
-		double y = 1;
-		double e = SQRT_PRECISION; // for accuracy level
-		while (x - y > e) {
-			x = (x + y) / 2;
-			y = number / x;
-		}
-		return x;
-	}
-
-	protected int factorial(int n) {
-		if (n == 0)
-			return 1;
-		else
-			return n * factorial(n - 1);
-	}
-
 	protected double convertDegreeToRadian(double deg) {
-		return deg / STRAIGHT_ANGLE_SIZE * pi;
+		return deg / CheersConfig.STRAIGHT_ANGLE_SIZE * pi;
 	}
 
 	protected double round(double nb) {
@@ -63,7 +37,7 @@ public class CheersMath {
 	}
 	
 	protected double roundToTwo(double nb){
-		int prec = 2;
+		int prec = precisionOutput;
 		nb *= prec;
 		nb = (int) nb;
 		nb /= prec;
@@ -86,22 +60,22 @@ public class CheersMath {
 				}
 			}
 			i++;
-		} while (i <= COS_ITERATIONS);
-		return sum;
+		} while (i <= CheersConfig.COS_ITERATIONS);
+		return round(sum);
 	}
 
 	// 4(1 - 1/3 + 1/5 - 1/7 + ...)
-	// Gregory–Leibniz
+	// Gregory-Leibniz
 	// http://functions.wolfram.com/Constants/Pi/02/
 	protected double pi() {
-		double piValue = 0, flip = -1, prec = PI_PRECISION;
+		double piValue = 0, flip = -1, prec = CheersConfig.PI_PRECISION;
 		int n = 1;
 		while (n <= prec) {
 			flip = -1 * flip;
 			piValue = piValue + (flip / n);
 			n = n + 2;
 		}
-		return 4 * piValue;
+		return round(4 * piValue);
 	}
 
 	// http://mathcentral.uregina.ca/QQ/database/QQ.09.00/roble1.html
@@ -109,11 +83,11 @@ public class CheersMath {
 	// f(x) = 0
 	protected double alpha() {
 		double alpha = 1.0;
-		for (int i = 0; i < ALPHA_ITERATIONS; i++) { // after 78th iteration, it converges to
+		for (int i = 0; i < CheersConfig.ALPHA_ITERATIONS; i++) { // after 78th iteration, it converges to
 										// 2.304129659127962
 			alpha = alpha - ((pi / 2 - alpha + sin(alpha)) / (-1 + cos(alpha))); // next x = current x - fx/fx'
 		}
-		return alpha; // 2.304129659127962
+		return round(alpha); // 2.304129659127962
 	}
 
 	// Computing sin(x) using Taylor Series
@@ -137,8 +111,7 @@ public class CheersMath {
 	// L = 2R(1 – cos(α/2))
 	// α – sin(α) = π/2.
 	public double getLength() throws CheersException{
-		this.precision = 2;
-		double cosValue = cos(alpha / 2);
+		double cosValue = cos(CheersConfig.ALPHA / 2);
 		return roundToTwo(2 * radius * (1 - cosValue));
 	}
 }
