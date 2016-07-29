@@ -28,7 +28,7 @@ public class CheersMath_I1 {
 		return deg / CheersConfig_I1.STRAIGHT_ANGLE_SIZE * pi;
 	}
 
-	protected double round(double nb) {
+	protected double roundIntermediate(double nb) {
 		double prec = 10 ^ this.precision;
 		nb *= prec;
 		nb = (int) nb;
@@ -36,7 +36,7 @@ public class CheersMath_I1 {
 		return nb;
 	}
 	
-	protected double roundToTwo(double nb){
+	protected double roundOutput(double nb){
 		int prec = 10^precisionOutput;
 		nb *= prec;
 		nb = (int) nb;
@@ -75,7 +75,7 @@ public class CheersMath_I1 {
 			piValue = piValue + (flip / n);
 			n = n + 2;
 		}
-		return round(4 * piValue);
+		return roundIntermediate(4 * piValue);
 	}
 
 	// http://mathcentral.uregina.ca/QQ/database/QQ.09.00/roble1.html
@@ -87,7 +87,7 @@ public class CheersMath_I1 {
 										// 2.304129659127962
 			alpha = alpha - ((pi / 2 - alpha + getSin(alpha)) / (-1 + getCos(alpha))); // next x = current x - fx/fx'
 		}
-		return round(alpha); // 2.304129659127962
+		return roundIntermediate(alpha); // 2.304129659127962
 	}
 
 	// Computing sin(x) using Taylor Series
@@ -105,13 +105,13 @@ public class CheersMath_I1 {
 			if (i % 4 == 3)
 				sum -= term;
 		}
-		return round(sum);
+		return roundIntermediate(sum);
 	}
 
-	// L = 2R(1 – cos(α/2))
+	//l = 2R(1 – cos(α/2)), 
 	// α – sin(α) = π/2.
 	public double getLength() throws CheersException_I1{
 		double cosValue = getCos(CheersConfig_I1.ALPHA / 2);
-		return roundToTwo(2 * radius * (1 - cosValue));
+		return roundOutput(2 * radius * (1 - cosValue));
 	}
 }
