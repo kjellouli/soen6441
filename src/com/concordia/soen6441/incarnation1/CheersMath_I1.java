@@ -1,31 +1,31 @@
-package com.concordia.soen6441.src;
-import com.concordia.soen6441.src.CheersConfig;
+package com.concordia.soen6441.incarnation1;
+import com.concordia.soen6441.incarnation1.CheersConfig_I1;
 
-public class CheersMath {
+public class CheersMath_I1 {
 
 	private int precision;
 	private int precisionOutput;
 	private double radius;
 	private double pi;
 
-	public CheersMath(double radius, int precision, int precisionOutput) throws CheersException {
-		if(radius < CheersConfig.RADIUS_MIN || radius > CheersConfig.RADIUS_MAX)
-			throw new CheersException("The Radius must be between 2 and 5.");
+	public CheersMath_I1(double radius, int precision, int precisionOutput) throws CheersException_I1 {
+		if(radius < 0)
+			throw new CheersException_I1("The Radius canot be negative.");
 		if(precision < 0)
-			throw new CheersException("The Precision value cannot be negative.");
-		if(precisionOutput < CheersConfig.PRECISION_OUTPUT_MIN || precisionOutput > CheersConfig.PRECISION_OUTPUT_MAX)
-			throw new CheersException("The Precision value must be between "+CheersConfig.PRECISION_OUTPUT_MIN+" and "+CheersConfig.PRECISION_OUTPUT_MAX+".");
+			throw new CheersException_I1("The Precision value cannot be negative.");
+		if(precisionOutput < CheersConfig_I1.PRECISION_OUTPUT_MIN || precisionOutput > CheersConfig_I1.PRECISION_OUTPUT_MAX)
+			throw new CheersException_I1("The Precision value must be between "+CheersConfig_I1.PRECISION_OUTPUT_MIN+" and "+CheersConfig_I1.PRECISION_OUTPUT_MAX+".");
 		try{
 			this.precision = precision; // TODO: cast precision to long only, no double, string or float allowed
 			this.radius = radius;
-			this.pi = pi();
+			this.pi = getPi();
 		} catch (NumberFormatException e) {
 			System.out.println("The Radius or Precision have the wrong number format.");
 		}
 	}
 
 	protected double convertDegreeToRadian(double deg) {
-		return deg / CheersConfig.STRAIGHT_ANGLE_SIZE * pi;
+		return deg / CheersConfig_I1.STRAIGHT_ANGLE_SIZE * pi;
 	}
 
 	protected double round(double nb) {
@@ -37,7 +37,7 @@ public class CheersMath {
 	}
 	
 	protected double roundToTwo(double nb){
-		int prec = precisionOutput;
+		int prec = 10^precisionOutput;
 		nb *= prec;
 		nb = (int) nb;
 		nb /= prec;
@@ -46,7 +46,7 @@ public class CheersMath {
 
 	// 1 - x^2/2! + x^4/4! - x^6/6! + ...
 	// Computing cos(x) using Taylor Series
-	protected double cos(double x) {
+	protected double getCos(double x) {
 		int i = 1;
 		double sum = 1.0, term = 1.0;
 		do {
@@ -60,15 +60,15 @@ public class CheersMath {
 				}
 			}
 			i++;
-		} while (i <= CheersConfig.COS_ITERATIONS);
+		} while (i <= CheersConfig_I1.COS_ITERATIONS);
 		return round(sum);
 	}
 
 	// 4(1 - 1/3 + 1/5 - 1/7 + ...)
 	// Gregory-Leibniz
 	// http://functions.wolfram.com/Constants/Pi/02/
-	protected double pi() {
-		double piValue = 0, flip = -1, prec = CheersConfig.PI_PRECISION;
+	protected double getPi() {
+		double piValue = 0, flip = -1, prec = CheersConfig_I1.PI_PRECISION;
 		int n = 1;
 		while (n <= prec) {
 			flip = -1 * flip;
@@ -81,17 +81,17 @@ public class CheersMath {
 	// http://mathcentral.uregina.ca/QQ/database/QQ.09.00/roble1.html
 	// using Newton's method, we can solve f(x) = sin(alpha) - alpha + pi/2 when
 	// f(x) = 0
-	protected double alpha() {
+	protected double getAlpha() {
 		double alpha = 1.0;
-		for (int i = 0; i < CheersConfig.ALPHA_ITERATIONS; i++) { // after 78th iteration, it converges to
+		for (int i = 0; i < CheersConfig_I1.ALPHA_ITERATIONS; i++) { // after 78th iteration, it converges to
 										// 2.304129659127962
-			alpha = alpha - ((pi / 2 - alpha + sin(alpha)) / (-1 + cos(alpha))); // next x = current x - fx/fx'
+			alpha = alpha - ((pi / 2 - alpha + getSin(alpha)) / (-1 + getCos(alpha))); // next x = current x - fx/fx'
 		}
 		return round(alpha); // 2.304129659127962
 	}
 
 	// Computing sin(x) using Taylor Series
-	protected double sin(double x) {
+	protected double getSin(double x) {
 		double term = 1.0;
 		int i = 0;
 		double sum = 0.0;
@@ -110,8 +110,8 @@ public class CheersMath {
 
 	// L = 2R(1 – cos(α/2))
 	// α – sin(α) = π/2.
-	public double getLength() throws CheersException{
-		double cosValue = cos(CheersConfig.ALPHA / 2);
+	public double getLength() throws CheersException_I1{
+		double cosValue = getCos(CheersConfig_I1.ALPHA / 2);
 		return roundToTwo(2 * radius * (1 - cosValue));
 	}
 }

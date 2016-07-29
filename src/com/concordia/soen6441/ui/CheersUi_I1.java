@@ -1,13 +1,13 @@
 package com.concordia.soen6441.ui;
 
-import com.concordia.soen6441.src.*;
-
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 
-public class CheersUi {
+import com.concordia.soen6441.incarnation1.*;
 
-	public static void main(String args[]) throws CheersException {
+public class CheersUi_I1 {
+
+	public static void main(String args[]) throws CheersException_I1 {
 		try {
 			double radius = 0;
 			int precision = 0;
@@ -27,10 +27,10 @@ public class CheersUi {
 					System.out.println("Invalid operation type.");
 				}
 
-				if (operation == CheersConfig.OPERATION_CALCULATE || operation == CheersConfig.OPERATION_EXIT) {
+				if (operation == CheersConfig_I1.OPERATION_CALCULATE || operation == CheersConfig_I1.OPERATION_EXIT) {
 					switch (operation) {
-						case CheersConfig.OPERATION_CALCULATE:
-							System.out.println("Please enter the Radius:");
+						case CheersConfig_I1.OPERATION_CALCULATE:
+							System.out.println("Please enter the Radius (in Inches):");
 							// TODO: make parseFloat native and control radius not
 							// to be
 							// too much small or big
@@ -39,16 +39,16 @@ public class CheersUi {
 							// add as fact
 							// TODO: Come up with our own decimal format function
 							radius = Double.parseDouble(br.readLine());
-							System.out.println("Please enter the precision of intermediate values calculation:");
+							System.out.println("Please enter the precision of intermediate values calculation (1 to 5):");
 							precision = Integer.parseInt(br.readLine());
-							System.out.println("Please enter the precision for the output:");
+							System.out.println("Please enter the precision for the output (1 to 5):");
 							precisionOutput = Integer.parseInt(br.readLine());
 							System.out.println("Calculating the length. Please wait...");
-							CheersMath cheersMath = new CheersMath(radius, precision, precisionOutput);
+							CheersMath_I1 cheersMath = new CheersMath_I1(radius, precision, precisionOutput);
 							System.out.println("The two coasters need to be moved " + cheersMath.getLength()
 									+ " inch far from each other");
 	
-						case CheersConfig.OPERATION_EXIT:
+						case CheersConfig_I1.OPERATION_EXIT:
 							System.out.println("Program Cheers Ended!");
 							System.exit(0);
 					}
