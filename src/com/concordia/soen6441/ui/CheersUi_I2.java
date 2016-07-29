@@ -50,8 +50,11 @@ public class CheersUi_I2 {
 							CheersMath_I2 cheersMath = new CheersMath_I2(radius, precision, precisionOutput);
 							DecimalFormat df = new DecimalFormat("0", DecimalFormatSymbols.getInstance(Locale.ENGLISH));
 							df.setMaximumFractionDigits(340);
+							boolean res = CheersXML_I2.generateXML(radius,precision,precisionOutput,df.format(cheersMath.getLength()));
+							if(res){
 							System.out.println("The two coasters need to be moved " + df.format(cheersMath.getLength())
 									+ " inch far from each other");
+							}
 	
 						case CheersConfig_I2.OPERATION_EXIT:
 							System.out.println("Program Cheers Ended!");

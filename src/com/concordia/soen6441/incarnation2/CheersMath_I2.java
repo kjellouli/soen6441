@@ -33,7 +33,7 @@ public class CheersMath_I2 {
 	protected double roundIntermediate(double nb) {
 		double prec = Math.pow(10, precision);
 		nb *= prec;
-		nb =  Math.round(nb);
+		nb = (int) Math.round(nb);
 		nb /= prec;
 		return nb;
 	}
@@ -41,9 +41,9 @@ public class CheersMath_I2 {
 	
 	// Precision of Output value is rounded up to number of decimal places selected by user
 	protected double roundOutput(double nb){
-		double prec = Math.pow(10, precisionOutput);
+		int prec = 10^precisionOutput;
 		nb *= prec;
-		nb = Math.round(nb);
+		nb = (int) nb;
 		nb /= prec;
 		return nb;
 	}
@@ -51,13 +51,13 @@ public class CheersMath_I2 {
 	// To get cosine value using built-in method
 	protected double getCos(double x) {
 		double sum = Math.cos(x);
-		return roundIntermediate(sum);
+		return sum;
 	}
 
 	//To get Pi value using java library
 	protected double getPi() {
 		double piValue =  Math.PI;
-		return roundIntermediate(4 * piValue);
+		return piValue;
 	}
 
 	// http://mathcentral.uregina.ca/QQ/database/QQ.09.00/roble1.html

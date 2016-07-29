@@ -61,7 +61,7 @@ public class CheersMath_I1 {
 			}
 			i++;
 		} while (i <= CheersConfig_I1.COS_ITERATIONS);
-		return round(sum);
+		return sum;
 	}
 
 	// 4(1 - 1/3 + 1/5 - 1/7 + ...)

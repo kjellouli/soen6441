@@ -47,7 +47,6 @@ public class CheersUi_I1 {
 							CheersMath_I1 cheersMath = new CheersMath_I1(radius, precision, precisionOutput);
 							System.out.println("The two coasters need to be moved " + cheersMath.getLength()
 									+ " inch far from each other");
-	
 						case CheersConfig_I1.OPERATION_EXIT:
 							System.out.println("Program Cheers Ended!");
 							System.exit(0);
@@ -63,5 +62,5 @@ public class CheersUi_I1 {
 			System.out.println("Program ended");
 		}
 	}
-
+	
 }
