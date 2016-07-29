@@ -1,0 +1,11 @@
+<!ELEMENT cheers (input,output)>
+<!ELEMENT input (radius,intermediateprecision,lengthprecision)>
+<!ELEMENT output (length)>
+<!ELEMENT radius (#PCDATA)>
+<!ELEMENT intermediateprecision (#PCDATA)> 
+<!ELEMENT lengthprecision (#PCDATA)> 
+<!ELEMENT length (#PCDATA)>
+<!ATTLIST radius type CDATA #IMPLIED>
+<!ATTLIST intermediateprecision type CDATA #IMPLIED>
+<!ATTLIST lengthprecision type CDATA #IMPLIED>
+<!ATTLIST length type CDATA #IMPLIED>

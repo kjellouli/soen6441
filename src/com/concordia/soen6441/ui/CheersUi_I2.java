@@ -34,13 +34,6 @@ public class CheersUi_I2 {
 					switch (operation) {
 						case CheersConfig_I2.OPERATION_CALCULATE:
 							System.out.println("Please enter the Radius (in Inches):");
-							// TODO: make parseFloat native and control radius not
-							// to be
-							// too much small or big
-							// check from Internet what is the smallest-biggest size
-							// to
-							// add as fact
-							// TODO: Come up with our own decimal format function
 							radius = Double.parseDouble(br.readLine());
 							System.out.println("Please enter the precision of intermediate values calculation (1 to 5):");
 							precision = Integer.parseInt(br.readLine());
