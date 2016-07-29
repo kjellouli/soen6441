@@ -16,6 +16,7 @@ public class CheersMath_I2 {
 			throw new CheersException_I2("The Precision value must be between "+CheersConfig_I2.PRECISION_OUTPUT_MIN+" and "+CheersConfig_I2.PRECISION_OUTPUT_MAX+".");
 		try{
 			this.precision = precision; // TODO: cast precision to long only, no double, string or float allowed
+			this.precisionOutput = precisionOutput;
 			this.radius = radius;
 			this.pi = getPi();
 		} catch (NumberFormatException e) {
@@ -32,32 +33,32 @@ public class CheersMath_I2 {
 	// Precision of intermediate calculations are rounded up to number of decimal places selected by user
 	protected double roundIntermediate(double nb) {
 		double prec = Math.pow(10, precision);
-		nb *= prec;
+		nb = nb * prec;
 		nb = (int) Math.round(nb);
-		nb /= prec;
+		nb = nb / prec;
 		return nb;
 	}
 	
 	
 	// Precision of Output value is rounded up to number of decimal places selected by user
 	protected double roundOutput(double nb){
-		int prec = 10^precisionOutput;
-		nb *= prec;
-		nb = (int) nb;
-		nb /= prec;
+		double prec = Math.pow(10, precisionOutput);
+		nb = nb * prec;
+		nb = (int) Math.round(nb);
+		nb = nb / prec;
 		return nb;
 	}
 
 	// To get cosine value using built-in method
 	protected double getCos(double x) {
 		double sum = Math.cos(x);
-		return sum;
+		return roundIntermediate(sum);
 	}
 
 	//To get Pi value using java library
 	protected double getPi() {
 		double piValue =  Math.PI;
-		return piValue;
+		return roundIntermediate(piValue);
 	}
 
 	// http://mathcentral.uregina.ca/QQ/database/QQ.09.00/roble1.html

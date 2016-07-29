@@ -10,13 +10,14 @@ public class CheersMath_I1 {
 
 	public CheersMath_I1(double radius, int precision, int precisionOutput) throws CheersException_I1 {
 		if(radius < 0)
-			throw new CheersException_I1("The Radius canot be negative.");
+			throw new CheersException_I1("The Radius cannot be negative.");
 		if(precision < 0)
 			throw new CheersException_I1("The Precision value cannot be negative.");
 		if(precisionOutput < CheersConfig_I1.PRECISION_OUTPUT_MIN || precisionOutput > CheersConfig_I1.PRECISION_OUTPUT_MAX)
 			throw new CheersException_I1("The Precision value must be between "+CheersConfig_I1.PRECISION_OUTPUT_MIN+" and "+CheersConfig_I1.PRECISION_OUTPUT_MAX+".");
 		try{
 			this.precision = precision; // TODO: cast precision to long only, no double, string or float allowed
+			this.precisionOutput = precisionOutput;
 			this.radius = radius;
 			this.pi = getPi();
 		} catch (NumberFormatException e) {
@@ -29,18 +30,24 @@ public class CheersMath_I1 {
 	}
 
 	protected double roundIntermediate(double nb) {
-		double prec = 10 ^ this.precision;
-		nb *= prec;
+		double prec = 1;
+		for(int i=1;i<=this.precision;i++){
+			prec = prec * 10;
+		}
+		nb =nb * prec;
 		nb = (int) nb;
-		nb /= prec;
+		nb = nb / prec;
 		return nb;
 	}
 	
 	protected double roundOutput(double nb){
-		int prec = 10^precisionOutput;
-		nb *= prec;
+		double prec = 1;
+		for(int i=1;i<=precisionOutput;i++){
+			prec = prec * 10;
+		}
+		nb = nb * prec;
 		nb = (int) nb;
-		nb /= prec;
+		nb = nb / prec;
 		return nb;
 	}
 
@@ -53,15 +60,15 @@ public class CheersMath_I1 {
 			term = (term * (x / i));
 			if (i % 2 == 0) {
 				if (i % 4 == 0) {
-					sum += term;
+					sum = sum + term;
 
 				} else {
-					sum -= term;
+					sum = sum - term;
 				}
 			}
 			i++;
 		} while (i <= CheersConfig_I1.COS_ITERATIONS);
-		return sum;
+		return roundIntermediate(sum);
 	}
 
 	// 4(1 - 1/3 + 1/5 - 1/7 + ...)
@@ -101,9 +108,9 @@ public class CheersMath_I1 {
 		for (i = 1; term != 0.0; i++) {
 			term *= (x / i);
 			if (i % 4 == 1)
-				sum += term;
+				sum = sum + term;
 			if (i % 4 == 3)
-				sum -= term;
+				sum = sum - term;
 		}
 		return roundIntermediate(sum);
 	}

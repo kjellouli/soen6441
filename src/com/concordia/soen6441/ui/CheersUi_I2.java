@@ -22,7 +22,7 @@ public class CheersUi_I2 {
 				BufferedReader br = new BufferedReader(is);
 
 				System.out.println("Please choose one of the operations below: (1 or 2)");
-				System.out.println("1. Calculate Length between the two coasters");
+				System.out.println("1. Calculate degree of overlap between the two coasters");
 				System.out.println("2. Exit");
 				try {
 					operation = Integer.parseInt(br.readLine());
