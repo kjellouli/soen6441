@@ -1,11 +1,24 @@
 package com.concordia.soen6441.ui;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
 
 import com.concordia.soen6441.incarnation1.*;
 
+/**
+ * The Class CheersUi_I1 to run incarnation-1 of cheers application.
+ */
 public class CheersUi_I1 {
+	
+	/**
+	 * The main method.
+	 *
+	 * @param args
+	 *            the arguments
+	 * @throws CheersException_I1
+	 *             the cheers exception I 1
+	 */
 	public static void main(String args[]) throws CheersException_I1 {
 			try {
 			double radius = 0;
@@ -29,7 +42,7 @@ public class CheersUi_I1 {
 				if (operation == CheersConfig_I1.OPERATION_CALCULATE || operation == CheersConfig_I1.OPERATION_EXIT) {
 					switch (operation) {
 						case CheersConfig_I1.OPERATION_CALCULATE:
-							System.out.println("Please enter the Radius (in Inches):");
+							System.out.println("Please enter the Radius (1 to 5 inches):");
 							radius = Double.parseDouble(br.readLine());
 							System.out.println("Please enter the precision of intermediate values calculation (1 to 5):");
 							precision = Integer.parseInt(br.readLine());
@@ -48,8 +61,10 @@ public class CheersUi_I1 {
 					System.out.println("Operation not found. Available choices are 1 and 2 only.");
 				}
 			}
-		} catch (Exception e) {
-			System.out.println("Cheers UI Exception: " + e);
+		} catch (NumberFormatException e) {
+			System.out.println("Entered value for radius or precision have the wrong number format.");
+		} catch (IOException e) {
+			System.out.println("Please enter values as instructed.");
 		} finally {
 			System.out.println("Program ended");
 		}

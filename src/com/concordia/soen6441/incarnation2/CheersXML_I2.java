@@ -1,7 +1,25 @@
 package com.concordia.soen6441.incarnation2;
 
+/**
+ * The Class CheersXML_I2 responsible to generate XML format of output.
+ * @author m_japa
+ *
+ */
 public class CheersXML_I2 {
 
+	/**
+	 * Generate XML.
+	 *
+	 * @param radius
+	 *            the radius
+	 * @param precision
+	 *            the precision
+	 * @param precisionOutput
+	 *            the precision output
+	 * @param output
+	 *            the output
+	 * @return true, if successful
+	 */
 	public static boolean generateXML(double radius, int precision, int precisionOutput, String output) {
 		boolean x = false;
 		try {

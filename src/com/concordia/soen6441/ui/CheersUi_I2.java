@@ -1,6 +1,7 @@
 package com.concordia.soen6441.ui;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
@@ -8,8 +9,19 @@ import java.util.Locale;
 
 import com.concordia.soen6441.incarnation2.*;
 
+/**
+ * The Class CheersUi_I2 to run incarnation-2 of cheers application.
+ */
 public class CheersUi_I2 {
 
+	/**
+	 * The main method.
+	 *
+	 * @param args
+	 *            the arguments
+	 * @throws CheersException_I2
+	 *             the cheers exception I 2
+	 */
 	public static void main(String args[]) throws CheersException_I2 {
 		try {
 			double radius = 0;
@@ -33,7 +45,7 @@ public class CheersUi_I2 {
 				if (operation == CheersConfig_I2.OPERATION_CALCULATE || operation == CheersConfig_I2.OPERATION_EXIT) {
 					switch (operation) {
 						case CheersConfig_I2.OPERATION_CALCULATE:
-							System.out.println("Please enter the Radius (in Inches):");
+							System.out.println("Please enter the Radius (1 o 5 Inches):");
 							radius = Double.parseDouble(br.readLine());
 							System.out.println("Please enter the precision of intermediate values calculation (1 to 5):");
 							precision = Integer.parseInt(br.readLine());
@@ -58,8 +70,10 @@ public class CheersUi_I2 {
 					System.out.println("Operation not found. Available choices are 1 and 2 only.");
 				}
 			}
-		} catch (Exception e) {
-			System.out.println("Cheers UI Exception: " + e);
+		} catch (NumberFormatException e) {
+			System.out.println("The Radius or Precision have the wrong number format.");
+		} catch (IOException e) {
+			System.out.println("Please enter values as instructed.");
 		} finally {
 			System.out.println("Program ended");
 		}
