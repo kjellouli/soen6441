@@ -49,7 +49,7 @@ public class CheersMath_I1 {
 	 * @return the converted double value
 	 */
 	protected double convertDegreeToRadian(double deg) {
-		return deg / CheersConfig_I1.STRAIGHT_ANGLE_SIZE * pi;
+		return roundIntermediate(deg * pi / CheersConfig_I1.STRAIGHT_ANGLE_SIZE );
 	}
 
 	/**
