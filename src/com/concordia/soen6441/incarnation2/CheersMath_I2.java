@@ -51,7 +51,7 @@ public class CheersMath_I2 {
 	 */
 	//Convertion of degree to radians
 	protected double convertDegreeToRadian(double deg) {
-		return (deg*Math.PI)/CheersConfig_I2.STRAIGHT_ANGLE_SIZE;
+		return roundIntermediate((deg*Math.PI)/CheersConfig_I2.STRAIGHT_ANGLE_SIZE);
 	}
 	
 	
